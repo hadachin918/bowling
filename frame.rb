@@ -5,19 +5,19 @@ class Frame
     
   def initialize
     @throws = []
-    @accum_score = "-"
+    @accum_score = nil
   end
   
-  def get_remain_count
-    @throws.size == 0 ? PIN_COUNT : PIN_COUNT - @throws.reduce(:+)
+  def remain
+    PIN_COUNT - knocks
   end
   
-  def set_throw(knock_count)
+  def <<(knock_count)
     @throws << knock_count
   end
   
   def is_calced?
-    @accum_score.is_a?(Integer)
+    !@accum_score.nil?
   end
   
   def is_throwed?
@@ -25,15 +25,22 @@ class Frame
   end
   
   def is_strike?
-    @throws.size == 1 and @throws.reduce(:+) == PIN_COUNT
+    @throws.size == 1 and knocks == PIN_COUNT
+  end
+  
+  def next
+    # ..?
   end
   
   def is_spare?
-    @throws.size == 2 and @throws.reduce(:+) == PIN_COUNT
+    @throws.size == 2 and knocks == PIN_COUNT
   end
   
   def is_open?
-    @throws.size == 2 and @throws.reduce(:+) != PIN_COUNT
+    @throws.size == 2 and knocks != PIN_COUNT
   end
-
+  
+  def knocks
+    @throws.reduct(0, :+)
+  end
 end

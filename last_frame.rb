@@ -1,7 +1,15 @@
 class LastFrame < Frame
   
-  def get_remain_count
+  
+  
+  def remain
     @throws.size == 0 ? PIN_COUNT : PIN_COUNT - @throws.reduce(:+) % PIN_COUNT
+  end
+  
+  def is_throwed?
+    (@throws.size == 2 and knocks < PIN_COUNT)
+    or 
+    @throws.size == 3
   end
   
   def is_strike?
