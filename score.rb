@@ -10,11 +10,6 @@ class Score
   end
   
   def calc_score
-    calc_accum_scores
-    calc_total_score
-  end
-  
-  def calc_accum_scores
     before_accum_score = 0
     @frames.each_with_index do |frame, i|
       #ストライク
@@ -31,12 +26,7 @@ class Score
       end
       before_accum_score = frame.accum_score if frame.is_calced?
     end
-  end
-    
-  def calc_total_score
-    @frames.each do |frame|
-      @total_score = frame.accum_score if frame.is_calced?
-    end
+    @total_score = before_accum_score
   end
   
   def get_next_throw_sum(frame_num, throw_num, sum_count)
@@ -57,14 +47,6 @@ class Score
     return frame_num, throw_num + 1 if @frames[frame_num-1].throws[throw_num]
     return frame_num + 1, 1 if @frames[frame_num] and @frames[frame_num].throws[0]
     false
-  end
-  
-  def log
-    @frames.each_with_index do |frame, i|
-      puts "第#{i+1}フレーム"
-      frame.throws.each_with_index { |throw, j| print "#{j+1}投目：#{throw}　" }
-      puts "累積スコア：#{frame.accum_score}"
-    end
   end
   
 end

@@ -15,14 +15,17 @@ class Player
       frame.set_throw(knock_count)
       @score.calc_score
       
-      log
-      sleep(0.25)
+      log; sleep(0.25)
     end
   end
   
   def log
     puts name
-    @score.log
+    @score.frames.each_with_index do |frame, i|
+      puts "第#{i+1}フレーム"
+      frame.throws.each_with_index { |throw, j| print "#{j+1}投目：#{throw}　" }
+      puts "累積スコア：#{frame.accum_score}"
+    end
     puts ""
   end
   
