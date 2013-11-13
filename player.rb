@@ -11,12 +11,16 @@ class Player
     frame = @score.frames[frame_num-1]
     while !frame.is_throwed?
       remain_count = frame.get_remain_count
-      knock_count = rand(3) == 0 ? remain_count : rand(remain_count+1)
+      knock_count = knock(remain_count)
       frame.set_throw(knock_count)
       @score.calc_score
       
       log; sleep(0.25)
     end
+  end
+  
+  def knock(remain_count)
+    rand(3) == 0 ? remain_count : rand(remain_count+1)
   end
   
   def log
